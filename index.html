@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdVenture LABS | Strategic Marketing Partner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #050505; /* Preto Absoluto */
+            --color-bg-alt: #080f1a; /* Azul Profundo (Deep Navy) */
+            --color-surface: #141414;
+            --color-text-main: #ffffff;
+            --color-text-muted: #a0a0a0;
+            --color-accent-red: #ff3333; /* Vermelho Bold */
+            --color-accent-blue: #0a2342; /* Azul Marinho */
+            --grid-color: rgba(255, 255, 255, 0.03);
+            --font-main: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- UTILITIES --- */
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tech-grid-bg {
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: center top;
+        }
+
+        h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+        h1 { font-size: 4rem; margin-bottom: 1.5rem; }
+        h2 { font-size: 2.8rem; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-text-main); }
+        p { font-size: 1.1rem; color: var(--color-text-muted); margin-bottom: 1.5rem; font-weight: 300; max-width: 650px; }
+        
+        .tagline {
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.2em;
+            color: var(--color-accent-red); font-weight: 600; margin-bottom: 1.5rem; display: block;
+        }
+        .highlight-text { color: var(--color-accent-red); }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
+        section { padding: 6rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; }
+        .section-blue { background-color: var(--color-bg-alt); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem 0;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo img { height: 35px; vertical-align: middle; cursor: pointer; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            color: var(--color-text-main); text-decoration: none;
+            font-size: 0.85rem; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.05em; transition: color 0.3s; cursor: pointer;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--color-accent-red); }
+        .nav-btn {
+            padding: 0.5rem 1.5rem; border: 1px solid var(--color-accent-red);
+            color: var(--color-accent-red) !important; border-radius: 4px;
+        }
+        .nav-btn:hover { background: var(--color-accent-red); color: white !important; }
+
+        /* --- HOME HERO --- */
+        .hero {
+            min-height: 90vh; display: flex; align-items: center; position: relative;
+            background: linear-gradient(90deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.8) 50%, rgba(5,5,5,0.3) 100%), url('monitor-setup.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+        .btn-primary {
+            display: inline-block; padding: 1rem 2.5rem; background: var(--color-accent-red);
+            color: white; text-decoration: none; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.1em; border: none; cursor: pointer; transition: all 0.3s ease; margin-top: 1rem;
+        }
+        .btn-primary:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255, 51, 51, 0.2); }
+
+        /* --- WHO WE ARE (Values) --- */
+        .value-box {
+            border-left: 2px solid var(--color-accent-red); padding-left: 1.5rem; margin-bottom: 2rem;
+        }
+        .value-title { font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+
+        /* --- SOLUTIONS CARD --- */
+        .solution-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+            padding: 2.5rem; transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .solution-card:hover { background: rgba(255,255,255,0.06); transform: translateY(-5px); }
+        .solution-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 0;
+            background: var(--color-accent-red); transition: height 0.3s;
+        }
+        .solution-card:hover::before { height: 100%; }
+        .card-icon { font-size: 2rem; margin-bottom: 1.5rem; color: var(--color-accent-red); }
+
+        /* --- PLANS --- */
+        .plan-card {
+            background: var(--color-bg); border: 1px solid rgba(255,255,255,0.1);
+            padding: 3rem 2rem; text-align: center; position: relative;
+        }
+        .plan-featured {
+            border-color: var(--color-accent-red); transform: scale(1.05); z-index: 2;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        .plan-price { font-size: 2.5rem; font-weight: 700; margin: 1.5rem 0; color: white; }
+        .plan-price span { font-size: 1rem; font-weight: 400; color: var(--color-text-muted); }
+        .plan-features { list-style: none; margin: 2rem 0; text-align: left; }
+        .plan-features li { margin-bottom: 1rem; padding-left: 1.5rem; position: relative; color: #ccc; font-size: 0.95rem; }
+        .plan-features li::before { content: '>'; position: absolute; left: 0; color: var(--color-accent-red); font-weight: bold; }
+
+        /* --- FOUNDER SECTION --- */
+        .founder-frame {
+            position: relative; display: inline-block;
+            border: 1px solid var(--color-text-muted); padding: 1rem;
+        }
+        .founder-img {
+            width: 100%; max-width: 400px; height: auto;
+            filter: grayscale(100%); transition: filter 0.3s;
+            background-color: #1a1a1a; /* Fallback color */
+        }
+        .founder-img:hover { filter: grayscale(0%); }
+        .founder-role {
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--color-accent-red); margin-bottom: 0.5rem; font-weight: 600;
+        }
+
+        /* --- BRAND PAGE SPECIFIC --- */
+        .brand-hero {
+            height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            background: linear-gradient(rgba(10,10,10,0.8), var(--color-bg)), url('car-show-shopping.jpg');
+            background-size: cover; background-position: center;
+        }
+        .color-palette { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+        .color-swatch {
+            width: 100px; height: 100px; border-radius: 8px; display: flex; flex-direction: column;
+            justify-content: end; padding: 0.8rem; font-size: 0.7rem; font-weight: bold;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 4rem 0; background-color: #020202; text-align: center;
+            font-size: 0.9rem; color: var(--color-text-muted); border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-address {
+            margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .grid-2 { grid-template-columns: 1fr; gap: 3rem; }
+            .nav-links { display: none; } /* Simplified for demo mobile menu */
+            .plan-featured { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="container nav-container">
+            <div class="nav-logo" onclick="showPage('home')">
+                <img src="adventure-light-3.png" alt="AdVenture Logo">
+            </div>
+            <ul class="nav-links">
+                <!-- Links para Home -->
+                <li><a onclick="scrollToSection('home-hero')">Início</a></li>
+                <li><a onclick="scrollToSection('quem-somos')">Quem Somos</a></li>
+                <li><a onclick="scrollToSection('solucoes')">Soluções</a></li>
+                <li><a onclick="scrollToSection('planos')">Planos</a></li>
+                <li><a onclick="scrollToSection('founder')">Founder</a></li>
+                <!-- Link para Brand Page -->
+                <li><a onclick="showPage('brand')" class="nav-btn">Sobre a Marca</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- VIEW: HOME (INSTITUTIONAL) -->
+    <!-- ============================================ -->
+    <div id="view-home" class="fade-in">
+        
+        <!-- 1. HERO SECTION -->
+        <section id="home-hero" class="hero tech-grid-bg">
+            <div class="container hero-content">
+                <span class="tagline">Movimentos Ousados. Crescimento Inteligente.</span>
+                <h1>Sua Bússola Estratégica em um <br><span class="highlight-text">Mar de Dados</span>.</h1>
+                <p>
+                    Transformamos incertezas em aventuras calculadas. 
+                    Somos o laboratório de marketing data-driven para empresas que buscam escala real.
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#contact-footer" class="btn-primary">Falar com Especialista</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. QUEM SOMOS (Mission/Vision) -->
+        <section id="quem-somos" class="section-blue">
+            <div class="container">
+                <div class="grid-2">
+                    <div>
+                        <span class="tagline">Quem Somos</span>
+                        <h2>Não somos agência.<br>Somos Guia.</h2>
+                        <p>No mundo dos negócios, todo investimento é uma aposta (Venture). Nosso papel não é ser o herói da história, mas o guia que fornece o mapa e a estratégia.</p>
+                        
+                        <div style="margin-top: 3rem;">
+                            <div class="value-box">
+                                <div class="value-title">Missão: A Bússola</div>
+                                <p style="margin:0; font-size:0.9rem;">Dar clareza estratégica para transformar investimento em valor real, eliminando o "achismo" do marketing.</p>
+                            </div>
+                            <div class="value-box">
+                                <div class="value-title">Visão: O Laboratório</div>
+                                <p style="margin:0; font-size:0.9rem;">Ser a referência nacional em performance criativa, onde dados frios encontram narrativas quentes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <!-- Using camping image to represent the "Guide" concept -->
+                        <img src="camping.jpg" alt="AdVenture Guide" style="width: 100%; border-radius: 4px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SOLUÇÕES -->
+        <section id="solucoes" class="tech-grid-bg">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 4rem;">
+                    <span class="tagline">Nossa Expertise</span>
+                    <h2>O Ecossistema AdVenture</h2>
+                </div>
+                <div class="grid-3">
+                    <div class="solution-card">
+                        <div class="card-icon">01.</div>
+                        <h3>Tráfego Data-Driven</h3>
+                        <p style="font-size: 0.9rem;">Gestão de mídia baseada em ciência, não sorte. Testes A/B contínuos para maximizar o ROI.</p>
+                    </div>
+                    <div class="solution-card">
+                        <div class="card-icon">02.</div>
+                        <h3>Business Intelligence</h3>
+                        <p style="font-size: 0.9rem;">Dashboards em tempo real. Transformamos a complexidade dos dados em decisões simples.</p>
+                    </div>
+                    <div class="solution-card">
+                        <div class="card-icon">03.</div>
+                        <h3>Branding Estratégico</h3>
+                        <p style="font-size: 0.9rem;">Criação de identidade e posicionamento para marcas que precisam transmitir autoridade imediata.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PLANOS -->
+        <section id="planos" class="section-blue">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 4rem;">
+                    <span class="tagline">Investimento</span>
+                    <h2>Modelos de Parceria</h2>
+                </div>
+                <div class="grid-3">
+                    <div class="plan-card">
+                        <h3>Start</h3>
+                        <div class="plan-price">R$ 3k</div>
+                        <p style="font-size: 0.9rem; margin:0;">Validação de Canais</p>
+                        <ul class="plan-features">
+                            <li>Tráfego Google/Meta</li>
+                            <li>Relatório PDF Mensal</li>
+                            <li>Reunião de Alinhamento</li>
+                        </ul>
+                    </div>
+                    <div class="plan-card plan-featured">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; background: var(--color-accent-red); font-size: 0.8rem; padding: 0.3rem; font-weight: bold;">MAIS ESCOLHIDO</div>
+                        <h3 style="margin-top: 1rem;">Growth</h3>
+                        <div class="plan-price">R$ 7k</div>
+                        <p style="font-size: 0.9rem; margin:0;">Escala & Inteligência</p>
+                        <ul class="plan-features">
+                            <li>Gestão Omnichannel</li>
+                            <li><strong>Dashboard BI Ao Vivo</strong></li>
+                            <li>Consultoria Quinzenal</li>
+                            <li>Criação de Anúncios</li>
+                        </ul>
+                        <a href="#contact-footer" class="btn-primary" style="width: 100%; margin-top: 0;">Selecionar</a>
+                    </div>
+                    <div class="plan-card">
+                        <h3>Enterprise</h3>
+                        <div class="plan-price">Custom</div>
+                        <p style="font-size: 0.9rem; margin:0;">Domínio de Mercado</p>
+                        <ul class="plan-features">
+                            <li>Squad Dedicada</li>
+                            <li>BI & Modelagem de Dados</li>
+                            <li>Consultoria C-Level</li>
+                            <li>Branding Completo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. FOUNDER SECTION -->
+        <section id="founder">
+            <div class="container">
+                <div class="grid-2">
+                    <div style="text-align: center;">
+                        <div class="founder-frame">
+                             <!-- Placeholder for Rodrigo's photo. Using runner-shirt as a placeholder for 'active leader' or just a colored box -->
+                            <img src="runner-shirt.jpg" alt="Rodrigo Ribas" class="founder-img" style="object-position: top; height: 400px; object-fit: cover;">
+                        </div>
+                    </div>
+                    <div>
+                        <span class="founder-role">Founder & Strategist</span>
+                        <h2>Rodrigo Ribas</h2>
+                        <p class="highlight-text" style="font-size: 1.2rem; margin-bottom: 1.5rem;">"A educação me ensinou a explicar o porquê. O marketing me ensinou a entregar o como."</p>
+                        <p>
+                            Com um background único que une a didática da sala de aula à agressividade do marketing de performance, Rodrigo fundou a AdVenture LABS com uma premissa simples: empoderar o cliente.
+                        </p>
+                        <p>
+                            Ele não acredita em "caixas pretas". Acredita que o verdadeiro crescimento acontece quando o empreendedor entende a estratégia por trás do clique.
+                        </p>
+                        <img src="adventure-light-3.png" alt="Signature" style="width: 50px; opacity: 0.5; margin-top: 1rem;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- VIEW: BRAND PAGE (HIDDEN BY DEFAULT) -->
+    <!-- ============================================ -->
+    <div id="view-brand" class="hidden fade-in">
+        
+        <header class="brand-hero">
+            <div class="container hero-content">
+                <span class="tagline">Brand Guide</span>
+                <h1>A Alma da <span class="highlight-text">Aventura</span>.</h1>
+                <p>Diretrizes de marca, tom de voz e identidade visual.</p>
+            </div>
+        </header>
+
+        <section class="tech-grid-bg">
+            <div class="container">
+                <div class="grid-2">
+                    <div>
+                        <span class="tagline">Conceito</span>
+                        <h2>A Ciência do Nome</h2>
+                        <p>A AdVenture não é apenas um nome, é a síntese da nossa filosofia.</p>
+                        
+                        <div style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div>
+                                <h3 style="margin-bottom: 0.5rem;"><span class="highlight-text">AD</span> (Advertisement)</h3>
+                                <p style="margin:0; font-size: 0.95rem;">A base técnica. A publicidade como motor de tração.</p>
+                            </div>
+                            <div>
+                                <h3 style="margin-bottom: 0.5rem;"><span class="highlight-text">VENTURE</span> (Empreendimento)</h3>
+                                <p style="margin:0; font-size: 0.95rem;">O risco calculado. A parceria com quem aposta alto.</p>
+                            </div>
+                            <div>
+                                <h3 style="margin-bottom: 0.5rem;">A<span class="highlight-text">VENTURA</span> (Exploração)</h3>
+                                <p style="margin:0; font-size: 0.95rem;">O espírito inquieto de desbravar novos mercados.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                         <img src="nissan-frontier-adventure.jpg" alt="Exploration" style="width: 100%; border-radius: 4px;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="brand-visual" class="section-blue">
+            <div class="container">
+                <div class="grid-2">
+                    <div>
+                        <span class="tagline">Look & Feel</span>
+                        <h2>Tech & Minimalista</h2>
+                        <p>Nossa estética rejeita o excesso. Buscamos a sofisticação do "Dark Mode" combinada com a clareza tipográfica.</p>
+                        
+                        <div class="color-palette">
+                            <div class="color-swatch" style="background: #0A2342; border: 1px solid #333;">Smart Navy<br>#0A2342</div>
+                            <div class="color-swatch" style="background: #FF3333; color: white;">Bold Red<br>#FF3333</div>
+                            <div class="color-swatch" style="background: #050505; border: 1px solid #333;">Graphite<br>#050505</div>
+                        </div>
+                    </div>
+                    <div class="grid-2" style="gap: 1rem;">
+                         <img src="office-mockup.jpg" alt="Corp" style="width: 100%; border-radius: 4px;">
+                         <img src="cap.jpg" alt="Style" style="width: 100%; border-radius: 4px;">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER (SHARED) -->
+    <footer id="contact-footer">
+        <div class="container">
+            <div style="margin-bottom: 2rem;">
+                <h2>Pronto para a jornada?</h2>
+                <a href="#" class="btn-primary" style="margin-top: 1rem;">Iniciar Projeto</a>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 2rem;">
+                <div>
+                    <h4 style="color: white; margin-bottom: 0.5rem;">Social</h4>
+                    <a href="#" style="color: #666; text-decoration: none; display: block;">Instagram</a>
+                    <a href="#" style="color: #666; text-decoration: none; display: block;">LinkedIn</a>
+                </div>
+                <div>
+                    <h4 style="color: white; margin-bottom: 0.5rem;">Contato</h4>
+                    <a href="#" style="color: #666; text-decoration: none; display: block;">WhatsApp</a>
+                    <a href="#" style="color: #666; text-decoration: none; display: block;">Email</a>
+                </div>
+            </div>
+
+            <div class="footer-address">
+                <p style="margin: 0; color: var(--color-text-muted);">
+                    Av. do Parque, 501, Jaú<br>
+                    Santo Antônio da Patrulha - RS
+                </p>
+            </div>
+            
+            <p style="margin-top: 2rem; opacity: 0.3;">&copy; 2025 AdVenture LABS. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            const homeView = document.getElementById('view-home');
+            const brandView = document.getElementById('view-brand');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+
+            if (pageId === 'home') {
+                homeView.classList.remove('hidden');
+                brandView.classList.add('hidden');
+            } else if (pageId === 'brand') {
+                homeView.classList.add('hidden');
+                brandView.classList.remove('hidden');
+            }
+        }
+
+        function scrollToSection(sectionId) {
+            // Ensure we are on home view first
+            showPage('home');
+            // Slight delay to allow DOM update if switching views
+            setTimeout(() => {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html>
